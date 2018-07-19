@@ -35,9 +35,6 @@ class App extends React.Component {
     if (this.score===12){
       alert ("You're King of the Trailer Park YAYYY")
     }
-    else{
-      this.shufflePics();
-    }
   };
 
   restartGame = () => {
@@ -45,26 +42,25 @@ class App extends React.Component {
       score:0,
       clicked:[]
     });
-    this.shufflePics();
   };;
 
-  shuffle =(array) =>{
-    for (var i=array.length-1; i>0; i--){
-      var j = Math.floor(Math.random()*(i+1))
-      [array[i],array[j]]=[array[j],array[i]]
+  shufflePics =(array) =>{
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   };
 
-  render () {
-    let shuffled=shuffle(this.state.friends);
-      return (
+  render() {
+    const shuffledPics = this.shufflePics(this.state.friends);
+    return (
       <Wrapper>
         <div class="jumbotron">
           <h1 class="display-4">Trailer Park Boys Memory Game</h1>
           <h1>score = {this.state.score}</h1> 
         </div>         
-        {shuffled.map(friend => {
+        {shuffledPics.map((friend) => {
           return (
           <FriendCard
             key={friend.id}
@@ -72,7 +68,8 @@ class App extends React.Component {
             score={this.score}
             clicker={this.clicker}
             scoreIncrement={this.scoreIncrement}
-            shufflePics={this.shufflePics}
+            restartGame={this.restartGame}
+            // shufflePics={this.shufflePics}
             image={friend.image}
           /> )
         })
